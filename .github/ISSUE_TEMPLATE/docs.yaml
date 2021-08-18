@@ -32,6 +32,7 @@ body:
       required: true
     attributes:
       label: 原文发布时间
+      description: "格式为：2021-08-18"
   - type: input
     id: author
     validations:
