@@ -7,14 +7,13 @@ body:
     attributes:
       value: |
         ## 类型
-  - type: markdown
+  - type: input
     id: type
+    validations:
+      required: true
     attributes:
-      value: |
-        本文的类型为？
-        - [ ] 翻译
-        - [ ] 原创
-        - [ ] 转载
+      label: 本文的类型为？
+      description: 只可填写三个选项：翻译、原创、转载
   - type: markdown
     id: info
     attributes:
@@ -51,14 +50,52 @@ body:
     attributes:
       value: |
         ## 当前进度
-  - type: markdown
-    id: progress_detail
+  - type: input
+    id: progress_1
+    validations:
+      required: true
     attributes:
-      value: |
-        - [ ] 已提交文章线索
-        - [ ] 已有人认领翻译或为原创文章
-        - [ ] 已提交 PR
-        - [ ] 正在review
-        - [ ] review 完成等待发布
-        - [ ] 已发布到 http://kubesphere.com.cn
-        - [ ] 已发布到 「KubeSphere 云原生」 微信公众号
+      label: 已提交文章线索？
+      description: 只能填写 `yes` 或者 `no`
+  - type: input
+    id: progress_2
+    validations:
+      required: true
+    attributes:
+      label: 已有人认领翻译或为原创文章？
+      description: 只能填写 `yes` 或者 `no`
+  - type: input
+    id: progress_3
+    validations:
+      required: true
+    attributes:
+      label: 已提交 PR？
+      description: 只能填写 `yes` 或者 `no`
+  - type: input
+    id: progress_4
+    validations:
+      required: true
+    attributes:
+      label: 正在review？
+      description: 只能填写 `yes` 或者 `no`
+  - type: input
+    id: progress_5
+    validations:
+      required: true
+    attributes:
+      label: review 完成等待发布？
+      description: 只能填写 `yes` 或者 `no`
+  - type: input
+    id: progress_6
+    validations:
+      required: true
+    attributes:
+      label: 已发布到 http://kubesphere.com.cn？
+      description: 只能填写 `yes` 或者 `no`
+  - type: input
+    id: progress_7
+    validations:
+      required: true
+    attributes:
+      label: 已发布到 「KubeSphere 云原生」 微信公众号？
+      description: 只能填写 `yes` 或者 `no`
