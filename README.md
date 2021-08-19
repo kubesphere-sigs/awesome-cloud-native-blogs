@@ -29,7 +29,7 @@
 为了鼓励和奖励大家对社区的贡献，社区特别设置了奖励机制。凡是通过以上任意方式参与贡献，都可以获得相对应的奖励，包括但不限于：社区贡献者证书（统一发放）、KubeSphere 周边纪念礼品（免费邮寄）。
 如果您还想获取其他类型的奖励，可以提交 Issue，我们将视具体情况判断，要求合理即可满足。
 
-![](https://pek3b.qingstor.com/kubesphere-community/images/KubeSphere-swag.png)
+![](https://cdn.jsdelivr.net/gh/kubesphere-sigs/awesome-cloud-native-blogs@master/img/kubesphere-swag.png)
 
 ## 如何参与
 
