@@ -23,7 +23,7 @@ publishDate:
 
 
 
-去年6月，[Tigera](https://www.tigera.io/?utm_content=inline-mention) 宣布首次在 k8s 上支持用于集群内加密传输的开源 vpn，[WireGuard](https://www.wireguard.com/) 。我们从来不喜欢坐以待毙，所以我们一直在努力为这项技术开发一些令人兴奋的新功能，其中第一个功能是使用 [Azure 容器网络接口](https://github.com/Azure/azure-container-networking/blob/master/docs/cni.md)（CNI）在 [Azure Kubernetes 服务](https://azure.microsoft.com/en-us/services/kubernetes-service/)（AKS）上支持WireGuard。
+去年6月，[Tigera](https://www.tigera.io/?utm_content=inline-mention) 宣布首次在 k8s 上支持用于集群内加密传输的开源 VPN，[WireGuard](https://www.wireguard.com/) 。我们从来不喜欢坐以待毙，所以我们一直在努力为这项技术开发一些令人兴奋的新功能，其中第一个功能是使用 [Azure 容器网络接口](https://github.com/Azure/azure-container-networking/blob/master/docs/cni.md)（CNI）在 [Azure Kubernetes 服务](https://azure.microsoft.com/en-us/services/kubernetes-service/)（AKS）上支持WireGuard。
 
 
 
@@ -73,7 +73,7 @@ WireGuard 是一种 VPN 技术，通常被认为是 C/S 架构。它同样能在
 同一主机上的 Pod：
 
 - 数据包被路由到 WireGuard 表。
-- 如果目标 IP 是同一主机上的 pod，则 Calico 将在 WireGuard 路由表中插入一个 “ throw ” 条目，将数据包引导回主路由表。数据包被定向到目标 Pod 的 veth 接口，并且它将在未加密的情况下流动（在图中以绿色显示）。
+- 如果目标 IP 是同一主机上的 Pod，则 Calico 将在 WireGuard 路由表中插入一个 “ throw ” 条目，将数据包引导回主路由表。数据包被定向到目标 Pod 的 veth 接口，并且它将在未加密的情况下流动（在图中以绿色显示）。
 
 
 
@@ -81,15 +81,15 @@ WireGuard 是一种 VPN 技术，通常被认为是 C/S 架构。它同样能在
 
 - 数据包被路由到 WireGuard 表。
 
-- 路由条目与目标 pod IP 匹配并发送到 WireGuard组件： cali.wireguard。
+- 路由条目与目标 Pod IP 匹配并发送到 WireGuard组件： cali.wireguard。
 
 - WireGuard 组件加密并封装数据包（在图中以红色显示）并设置 fwmark 以防止路由环路。
 
-- WireGuard 组件使用它与目标 pod IP（允许的 IP）匹配的对等方的公钥对数据包进行加密，将其封装在 UDP 中，并使用特殊的 fwmark 对其进行标记以防止路由环路。
+- WireGuard 组件使用它与目标 Pod IP（允许的 IP）匹配的对等方的公钥对数据包进行加密，将其封装在 UDP 中，并使用特殊的 fwmark 对其进行标记以防止路由环路。
 
 - 数据包通过 eth0 发送到目标节点并解密。
 
-- 这也适用于主机流量（例如，节点联网的 pod）。
+- 这也适用于主机流量（例如，节点联网的 Pod）。
 
 
 
@@ -111,9 +111,9 @@ Key：绿色表示未加密流量，红色表示加密流量。
 
 在 AKS 上使用 Azure CNI 对  WireGuard 的支持带来了一些非常有趣的挑战。
 
-首先，使用 Azure CNI 意味着不使用 Calico IPAM（ IP 地址管理）管理 CIDR（无类域间路由）块分配的 Pod IP 。相反，它们是采用节点IP相同的分配方式从底层 VNet 分配的。这对 WireGuard 路由来说是一个有趣的挑战，以往我们可以在 WireGuard 配置中的 Allowed IPs 列表中添加一个 CIDR 块，相比之下，我们现在必须写出该节点所有 pod IP。这需要 Calico 将 routeSource 的配置设为 workloadIPs。如果您使用的是 AKS 集群进行部署，便无需额外配置。
+首先，使用 Azure CNI 意味着不使用 Calico IPAM（ IP 地址管理）管理 CIDR（无类域间路由）块分配的 Pod IP 。相反，它们是采用节点IP相同的分配方式从底层 VNet 分配的。这对 WireGuard 路由来说是一个有趣的挑战，以往我们可以在 WireGuard 配置中的 Allowed IPs 列表中添加一个 CIDR 块，相比之下，我们现在必须写出该节点所有 Pod IP。这需要 Calico 将 routeSource 的配置设为 workloadIPs。如果您使用的是 AKS 集群进行部署，便无需额外配置。
 
-使用 wireguard-tools 中优秀的工具 [wg](https://git.zx2c4.com/wireguard-tools/about/src/man/wg.8)，可以查看集群内节点允许通过的 IP 列表，其中包括每个节点的 pod IP 和主机 IP（注意终端 IP也在允许 IP 列表中）。在 AKS 上提供了业务流量加密和主机到主机的加密。
+使用 wireguard-tools 中优秀的工具 [wg](https://git.zx2c4.com/wireguard-tools/about/src/man/wg.8)，可以查看集群内节点允许通过的 IP 列表，其中包括每个节点的 Pod IP 和主机 IP（注意终端 IP也在允许 IP 列表中）。在 AKS 上提供了业务流量加密和主机到主机的加密。
 
 
 
@@ -141,11 +141,7 @@ Key：绿色表示未加密流量，红色表示加密流量。
 
 第二个挑战是正确处理 MTU（最大传输单元）。[Azure 设置的 MTU 是 1500](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-tcpip-performance-tuning#azure-and-vm-mtu)，而 WireGuard 在数据包上设置了一个 DF（Don't Fragment）标记。如果没有正确调整 WireGuard MTU，我们会在启用 WireGuard 时发现有丢包和低带宽。我们可以在 AKS 中通过Calico 自动检测并为 [WireGuard 的 MTU](https://docs.projectcalico.org/networking/mtu) 设置正确的开销来优化。
 
+我们还可以将节点 IP 本身添加为对等节点允许通信的 IP ，并通过 AKS 中的 WireGuard 处理主机联网的 Pod 和主机到主机通信。主机到主机通信的方法是，当 [RPF](https://en.wikipedia.org/wiki/Reverse-path_forwarding)（反向路径转发）发生时，通过 WireGuard 接口获得路由返回的响应。通过在发送到目的节点的数据包上设置一个标记，然后配置内核以尊守 sysctl 中的 RPF 标记来解决这个问题。
 
-
-我们还可以将节点 IP 本身添加为对等节点允许通信的 IP ，并通过 AKS 中的 WireGuard 处理主机联网的 pod 和主机到主机通信。主机到主机通信的方法是，当 [RPF](https://en.wikipedia.org/wiki/Reverse-path_forwarding)（反向路径转发）发生时，通过 WireGuard 接口获得路由返回的响应。通过在发送到目的节点的数据包上设置一个标记，然后配置内核以尊守 sysctl 中的 RPF 标记来解决这个问题。
-
-现在，在 AKS 上可以完全支持节点之间的业务流量和主机通信加密。您仅需指明意图，其他的事情都由集群完成**。**
-
-
+现在您使用AKS时，节点之间的业务流量和主机到主机通信都会被加密。您仅需指明意图，其他的事情都由集群完成。
 
