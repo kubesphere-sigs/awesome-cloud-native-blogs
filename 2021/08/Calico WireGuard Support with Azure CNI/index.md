@@ -9,7 +9,7 @@ title: Calico WireGuard Support with Azure CNI
 summary: 讲述 WireGuard 可以在 k8s 中使用的解决方案
 categories: kubernetes
 tags: calico
-originalPublishDate: 2021-08-30
+originalPublishDate: 2021-08-12
 publishDate: 
 ---
 
@@ -33,7 +33,7 @@ WireGuard 是一种 VPN 技术，从linux 5.6 内核开始默认包含在内核�
 
 
 
-WireGuard 是一种 VPN 技术，通常被认为是 C/S 架构。它同样能在对等的网格网络架构中配置使用，这就是 Tigera 设计的 WireGuard可以在Kubernetes 中使用的解决方案。使用 Calico，将所有启用 WireGuard 的节点相互对等形成一个加密的网格。它甚至支持同一集群内启用 WireGuard 的节点在未启用 WireGuard 的节点中流动流量。
+WireGuard 是一种 VPN 技术，通常被认为是 C/S 架构。它同样能在对等的网格网络架构中配置使用，这就是 Tigera 设计的 WireGuard可以在Kubernetes 中使用的解决方案。使用 Calico，将所有启用 WireGuard 的节点相互对等形成一个加密的网格。它甚至支持同一集群内启用 WireGuard 的节点在未启用 WireGuard 的节点传输数据。
 
 
 
@@ -41,7 +41,7 @@ WireGuard 是一种 VPN 技术，通常被认为是 C/S 架构。它同样能在
 
 
 
-我们选择 WireGuard 并不是一个折中的方案。我们希望提供最简单、最安全、最快速的方式来加密传输 Kubernetes 集群中的数据，mTLS、IPsec 或复杂的配置不是我们想要的。事实上，你可以把 WireGuard 看成是另一个具有加密功能的覆加层。
+我们选择 WireGuard 并不是一个折中的方案。我们希望提供最简单、最安全、最快速的方式来加密传输 Kubernetes 集群中的数据，mTLS、IPsec 或复杂的配置不是我们想要的。事实上，您可以把 WireGuard 看成是另一个具有加密功能的overlay。
 
 
 
@@ -56,7 +56,7 @@ WireGuard 是一种 VPN 技术，通常被认为是 C/S 架构。它同样能在
 
 
 
-你仅需指明意图，其他的事情都由集群完成
+您仅需指明意图，其他的事情都由集群完成
 
 
 
@@ -111,7 +111,7 @@ Key：绿色表示未加密流量，红色表示加密流量。
 
 在 AKS 上使用 Azure CNI 对  WireGuard 的支持带来了一些非常有趣的挑战。
 
-首先，使用 Azure CNI 意味着不使用 Calico IPAM（ IP 地址管理）管理 CIDR（无类域间路由）块分配的 Pod IP 。相反，它们是采用节点IP相同的分配方式从底层 VNet 分配的。这对 WireGuard 路由来说是一个有趣的挑战，以往我们可以在 WireGuard 配置中的 Allowed IPs 列表中添加一个 CIDR 块，相比之下，我们现在必须写出该节点所有 pod IP。这需要 Calico 将 routeSource 的配置设为 workloadIPs。如果你使用的是 AKS 集群进行部署，便无需额外配置。
+首先，使用 Azure CNI 意味着不使用 Calico IPAM（ IP 地址管理）管理 CIDR（无类域间路由）块分配的 Pod IP 。相反，它们是采用节点IP相同的分配方式从底层 VNet 分配的。这对 WireGuard 路由来说是一个有趣的挑战，以往我们可以在 WireGuard 配置中的 Allowed IPs 列表中添加一个 CIDR 块，相比之下，我们现在必须写出该节点所有 pod IP。这需要 Calico 将 routeSource 的配置设为 workloadIPs。如果您使用的是 AKS 集群进行部署，便无需额外配置。
 
 使用 wireguard-tools 中优秀的工具 wg，可以查看集群内节点允许通过的 IP 列表，其中包括每个节点的 pod IP 和主机 IP（注意终端 IP也在允许 IP 列表中）。在 AKS 上提供了业务流量加密和主机到主机的加密。
 
@@ -145,5 +145,5 @@ Key：绿色表示未加密流量，红色表示加密流量。
 
 我们还可以将节点 IP 本身添加为对等节点允许通信的 IP ，并通过 AKS 中的 WireGuard 处理主机联网的 pod 和主机到主机通信。主机到主机通信的方法是，当 RPF（反向路径转发）发生时，通过 WireGuard 接口获得路由返回的响应。通过在发送到目的节点的数据包上设置一个标记，然后配置内核以尊守 sysctl 中的 RPF 标记来解决这个问题。
 
-现在，在 AKS 上可以完全支持节点之间的业务流量和主机通信加密。你仅需指明意图，其他的事情都由集群完成**。**
+现在，在 AKS 上可以完全支持节点之间的业务流量和主机通信加密。您仅需指明意图，其他的事情都由集群完成**。**
 
