@@ -33,7 +33,7 @@ WireGuard 是一种 VPN 技术，从linux 5.6 内核开始默认包含在内核�
 
 
 
-WireGuard 是一种 VPN 技术，通常被认为是 C/S 架构。它同样能在对等的网格网络架构中配置使用，这就是 Tigera 设计的 WireGuard可以在Kubernetes 中使用的解决方案。使用 Calico，将所有启用 WireGuard 的节点相互对等形成一个加密的网格。它甚至支持同一集群内启用 WireGuard 的节点在未启用 WireGuard 的节点传输数据。
+WireGuard 是一种 VPN 技术，通常被认为是 C/S 架构。它同样能在对等的网格网络架构中配置使用，这就是 Tigera 设计的 WireGuard可以在Kubernetes 中使用的解决方案。使用 Calico，将所有启用 WireGuard 的节点相互对等形成一个加密的网格。它甚至支持在同一集群内同时包含启用 WireGuard 的节点与未启用 WireGuard 的节点，并且可以相互通信。
 
 
 
