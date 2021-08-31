@@ -1,14 +1,14 @@
-```
+```html
   
 ---
 original: https://thenewstack.io/calico-wireguard-support-with-azure-cni/
-author: Wajdi Fathallah
+author: Peter Kelly
 translator: https://github.com/t819088691/
 reviewer: 
 title: Calico WireGuard Support with Azure CNI
 summary: 讲述 WireGuard 可以在 k8s 中使用的解决方案
-categories: Peter Kelly
-tags: kind/translation
+categories: kubernetes
+tags: calico
 originalPublishDate: 2021-08-30
 publishDate: 
 ---
@@ -36,9 +36,7 @@ WireGuard 是一种 VPN 技术，通常被认为是 C/S 架构。它同样能在
 
 
 
-网格网络架构图：https://cdn.thenewstack.io/media/2021/08/06581ad7-image1-10-e1628656758212.png
-
-（1.1.png )
+![](D:\gitadd\2021\08\Calico WireGuard Support with Azure CNI\1.1.png)
 
 
 
@@ -61,13 +59,13 @@ WireGuard 是一种 VPN 技术，通常被认为是 C/S 架构。它同样能在
 
 
 
-### 使用 WireGuard 时数据包流量的情况
+## 使用 WireGuard 时数据包流量的情况
 
 下图显示了启用 WireGuard 后集群中的各种数据包流量情况。
 
-图片链接：https://cdn.thenewstack.io/media/2021/08/eb522dd1-image2-8.png
 
-   ( 2.1.png )
+
+![](D:\gitadd\2021\08\Calico WireGuard Support with Azure CNI\2.1.png)
 
 
 
@@ -104,11 +102,11 @@ WireGuard 是一种 VPN 技术，通常被认为是 C/S 架构。它同样能在
 
 Key：绿色表示未加密流量，红色表示加密流量。
 
-动画链接：https://tigera.wistia.com/medias/ddl8bmhpgp
+​      [动画演示](https://tigera.wistia.com/medias/ddl8bmhpgp?utm_source=thenewstack&utm_medium=website&utm_campaign=platform)
 
 
 
-### WireGuard 在 AKS 的应用
+## WireGuard 在 AKS 的应用
 
 在 AKS 上使用 Azure CNI 对  WireGuard 的支持带来了一些非常有趣的挑战。
 
@@ -118,24 +116,24 @@ Key：绿色表示未加密流量，红色表示加密流量。
 
 
 
-```
-1  interface: wireguard.cali
-2   public key: bbcKpAY+Q9VpmIRLT+yPaaOALxqnonxBuk5LRlvKClA=
-3   private key: (hidden)
-4   listening port: 51820
-5   fwmark: 0x100000
-6
-7  peer: /r0PzTX6F0ZrW9ExPQE8zou2rh1vb20IU6SrXMiKImw=
-8   endpoint: 10.240.0.64:51820
-9   allowed ips: 10.240.0.64/32, 10.240.0.65/32, 10.240.0.66/32
-10  latest handshake: 11 seconds ago
-11  transfer: 1.17 MiB received, 3.04 MiB sent
-12
-13 peer: QfUXYghyJWDcy+xLW0o+xJVsQhurVNdqtbstTsdOp20=
-14  endpoint: 10.240.0.4:51820
-15  allowed ips: 10.240.0.4/32, 10.240.0.5/32, 10.240.0.6/32
-16  latest handshake: 46 seconds ago
-17  transfer: 83.48 KiB received, 365.77 KiB sent
+```shell
+  interface: wireguard.cali
+   public key: bbcKpAY+Q9VpmIRLT+yPaaOALxqnonxBuk5LRlvKClA=
+   private key: (hidden)
+   listening port: 51820
+   fwmark: 0x100000
+
+  peer: /r0PzTX6F0ZrW9ExPQE8zou2rh1vb20IU6SrXMiKImw=
+   endpoint: 10.240.0.64:51820
+   allowed ips: 10.240.0.64/32, 10.240.0.65/32, 10.240.0.66/32
+   latest handshake: 11 seconds ago
+   transfer: 1.17 MiB received, 3.04 MiB sent
+
+  peer: QfUXYghyJWDcy+xLW0o+xJVsQhurVNdqtbstTsdOp20=
+   endpoint: 10.240.0.4:51820
+   allowed ips: 10.240.0.4/32, 10.240.0.5/32, 10.240.0.6/32
+   latest handshake: 46 seconds ago
+   transfer: 83.48 KiB received, 365.77 KiB sent
 ```
 
 
