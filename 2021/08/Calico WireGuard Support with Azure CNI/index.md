@@ -1,4 +1,4 @@
-```html
+```
   
 ---
 original: https://thenewstack.io/calico-wireguard-support-with-azure-cni/
@@ -12,6 +12,7 @@ tags: calico
 originalPublishDate: 2021-08-30
 publishDate: 
 ---
+
 ```
 
 
