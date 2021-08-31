@@ -14,7 +14,7 @@ publishDate:
 ```
 
 # 计算简史
-![image](https://user-images.githubusercontent.com/42958736/130412859-85bd5700-a5ab-4d1a-a256-953835bc5e56.png)
+![](https://github.com/klaylin/awesome-cloud-native-blogs/blob/master/2021-08/compute-a-brief-history/0_H1N60ZgdO2FIJQlg.jpeg)
 
  你是否考虑过，为什么容器技术的传播会如此广泛？为什么会成为迁移和部署应用程序的标准？
  
