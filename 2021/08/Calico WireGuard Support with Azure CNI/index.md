@@ -37,7 +37,7 @@ WireGuard 是一种 VPN 技术，通常被认为是 C/S 架构。它同样能在
 
 
 
-![](https://cdn.thenewstack.io/media/2021/08/06581ad7-image1-10-e1628656758212.png)
+![](1.1.png)
 
 
 
@@ -66,7 +66,7 @@ WireGuard 是一种 VPN 技术，通常被认为是 C/S 架构。它同样能在
 
 
 
-![](https://cdn.thenewstack.io/media/2021/08/eb522dd1-image2-8.png)
+![](2.1.png)
 
 
 
