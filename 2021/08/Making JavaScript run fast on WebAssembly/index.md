@@ -6,7 +6,7 @@ reviewer:
 title: Making JavaScript run fast on WebAssembly
 summary: 阐述 JavaScript 如何在 WebAssembly 上快速的运行
 categories: 译文
-tags: ["kind/translation"]
+tags: ["kind/translation"，"WebAssembly"]
 originalPublishDate: 2021-06-02
 publishDate: 
 ---
@@ -17,13 +17,13 @@ publishDate:
 
 浏览器中 JavaScript 的运行速度相较于20年前快了很多倍。那是因为浏览器服务厂商花费了很多时间去做了相关方面密集的性能优化。
 
-今天，我们开始为完全不同的环境优化 JavaScript 的性能，在这些环境中应用不同的规则。并且这是可能的，因为， WebAssembly ！
+今天，我们开始为完全不同的环境优化 JavaScript 的性能，在这些环境中应用不同的规则。并且这是可能的，因为有了WebAssembly ！
 
 这里我们应该明白 —— 如果你在浏览器中运行 JavaScript ，简单的部署 JS 仍然是最有意义的。浏览器中的 JS 引擎经过了高度调优，以运行交付给它们的 JS 。
 
-但是，如果你在 Serverless function 中运行 JS 呢？又或者，如果你想将 JS 运行到像 IOS 或游戏机一样的不允许一般 JIT（ just-in-time ） 编译环境中？
+但是，如果你在 Serverless function 中运行 JS 呢？又或者，如果你想将 JS 运行到像 iOS 或游戏机一样的不允许一般 JIT（ just-in-time ） 编译环境中？
 
-对于这些用例，你需要去关注 JS 优化的新浪潮。并且，这项工作也可以服务于其他运行时模型，例如Python ， Ruby 和 Lua，它们也想在这些环境中快速运行。
+对于这些用例，你需要去关注 JS 优化的新浪潮。并且，这项工作也可以服务于其他编程语言模型，例如Python ， Ruby 和 Lua，它们也想在这些环境中快速运行。
 
 但是，在我们探索这种方法如何快速运行之前，我们需要先了解 WebAssembly 的基本工作原理。
 
@@ -39,7 +39,7 @@ publishDate:
 
 这意味着整个 JS 环境都将绑定到这个 WebAssembly 实例中。一旦部署了这一实例，你需要做的就是输入 JS 代码，然后实例就会运行该 JS 代码。
 
-![](D:\Software\document\Making JavaScript run fast on WebAssembly\img\01-02-how-it-works.png)
+![](https://github.com/kubesphere-sigs/awesome-cloud-native-blogs/2021/08/Making%20JavaScript%20run%20fast%20on%20WebAssembly/01-02-how-it-works.png)
 
 JS 引擎不是直接在机器的内存中工作，而是将所有内容 —— 从字节码到字节码正在操纵 GCed 对象 —— 放在 Wasm 模块的线性内存中。
 
