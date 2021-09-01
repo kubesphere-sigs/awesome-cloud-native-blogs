@@ -77,7 +77,7 @@ SpiderMonkey 还使用了一种精确堆栈扫描的技术，这对于我在下�
 
 ## Serverless 瞬间冷启动
 
-在其他地方，JIT 不是问题，但启动时间是问题，比如在 Serverless functions下。这就是您可能听说过的冷启动延迟问题。
+在其他地方，JIT 不是问题，但启动时间是问题，比如在 Serverless functions 下。这就是您可能听说过的冷启动延迟问题。
 
 ![](https://github.com/kubesphere-sigs/awesome-cloud-native-blogs/2021/08/Making%20JavaScript%20run%20fast%20on%20WebAssembly/02-03-cloud.png)
 
@@ -87,11 +87,11 @@ SpiderMonkey 还使用了一种精确堆栈扫描的技术，这对于我在下�
 
 使用这些技术延迟的平台也经常在请求之间复用实例。在一些情况下，这意味着可以在不同请求之间观察到全局状态，这是一个安全隐患。
 
-因为这种冷启动问题，开发者经常不遵循最佳实践。他们将大量功能放入一个 Serverless deployment。这导致了另一个安全问题 —— 更大的威胁攻击面。如果 Serverless deployment 的一部分弱点被利用，攻击者就可以访问该 deployment 的中的所有内容。
+因为这种冷启动问题，开发者经常不遵循最佳实践。他们将大量 functions 放入一个 Serverless deployment。这导致了另一个安全问题 —— 更大的威胁攻击面。如果 Serverless deployment 的一部分弱点被利用，攻击者就可以访问该 deployment 的中的所有内容。
 
 ![](https://github.com/kubesphere-sigs/awesome-cloud-native-blogs/2021/08/Making%20JavaScript%20run%20fast%20on%20WebAssembly/02-04-serverless-at-risk.png)
 
-但是如果我们可以在这些环境下使 JS 启动时间做够低，那我们是不需要用任何技巧来隐藏启动延迟。我们可以在几微妙内启动一个实例。
+但是如果我们可以在这些环境下使 JS 启动时间足够低，那我们是不需要用任何技巧来隐藏启动延迟。我们可以在几微妙内启动一个实例。
 
 有了这个，我们可以为每一个请求提供一个实例，这意味着请求之间没有状态。
 
@@ -101,9 +101,9 @@ SpiderMonkey 还使用了一种精确堆栈扫描的技术，这对于我在下�
 
 这种方法还有另一个安全优势。除了轻量和细粒度的代码隔离之外， WebAssembly 引擎提供的安全边界更加可靠。
 
-由于用于创建隔离的 JS 引擎是大型代码库，包含了大量进行超复杂优化的底级代码，因此很容易引入漏洞，使攻击者能够逃脱 VM（虚拟机）并访问 VM 运行的系统。这就是 Chrome 和 Firefox 等浏览器竭尽全力确保网站在完全分离的进程中运行的原因。
+由于用于创建隔离的 JS 引擎是大型代码库，包含了大量进行超复杂优化的底级代码，因此很容易引入漏洞，使攻击者能够逃脱 VM（虚拟机）并访问 VM 运行的系统。这就是 [Chrome](https://www.chromium.org/Home/chromium-security/site-isolation) 和 [Firefox](https://blog.mozilla.org/security/2021/05/18/introducing-site-isolation-in-firefox/) 等浏览器竭尽全力确保网站在完全分离的进程中运行的原因。
 
-相比之下， WebAssembly 引擎需要的代码要少的多，因此更容易代码审计，而且有许多代码使用 Rust（一种内存安全的编程语言） 编写的。并且[可以验证](http://cseweb.ucsd.edu/~dstefan/pubs/johnson:2021:veriwasm.pdf)从 WebAssembly 模块生成的本机内存隔离的二进制文件。
+相比之下， WebAssembly 引擎需要的代码要少的多，因此更容易代码审计，而且有许多代码使用 Rust（一种内存安全的编程语言） 编写的。那么[可以验证](http://cseweb.ucsd.edu/~dstefan/pubs/johnson:2021:veriwasm.pdf)从 WebAssembly 模块生成的本机内存隔离的二进制文件。
 
 通过 WebAssembly 引擎内部运行 JS 引擎，我们将这个更安全的外部沙箱边界作为另一道防线。
 
@@ -166,7 +166,7 @@ SpiderMonkey 还使用了一种精确堆栈扫描的技术，这对于我在下�
 
 ## 大幅减少初始化时间
 
-我们首先使用名为 [Wizer](https://github.com/bytecodealliance/wizer) 的工具快速进行初始化。我将解释如何，但对于那些不耐烦的人，这是我们在运行一个非常简单的 JS 应用时看到的加速。
+我们首先使用名为 [Wizer](https://github.com/bytecodealliance/wizer) 的工具快速进行初始化。我将补充 Wizer 如何运行，但对于那些不耐烦的人，这是我们在运行一个非常简单的 JS 应用时看到的加速。
 
 ![](https://github.com/kubesphere-sigs/awesome-cloud-native-blogs/2021/08/Making%20JavaScript%20run%20fast%20on%20WebAssembly/04-01-startup-latency-vs-isolate.png)
 
@@ -242,7 +242,7 @@ JIT 使用的一种优化技术是内联缓存。使用内联缓存，JIT 创建
 
 但是，如果我们可以访问 JIT 拥有的相同类型的分析信息呢？然后我们可以完全优化代码。
 
-但是这里有一个问题——开发人员通常很难分析他们自己的代码。很难提出具有代表性的示例工作负载。所以我们不确定我们是否可以获得正确的分析数据。
+但是这里有一个问题——开发者通常很难分析他们自己的代码。很难提出具有代表性的示例工作负载。所以我们不确定我们是否可以获得正确的分析数据。
 
 不过，如果我们能找到一种方法来放置好的工具进行分析，那么我们就有可能使 JS 的运行速度几乎与今天的 JIT 一样快（而且无需预热时间！）
 
@@ -254,7 +254,7 @@ JIT 使用的一种优化技术是内联缓存。使用内联缓存，JIT 创建
 
 ### 对于其他想要支持 JS 的平台
 
-要在自己的平台上运行 JS，需要嵌入一个支持 WASI 的 WebAssembly 引擎。我们[为此](https://github.com/bytecodealliance/wasmtime)使用了[Wasmtime](https://github.com/bytecodealliance/wasmtime)。
+要在自己的平台上运行 JS，需要嵌入一个支持 WASI 的 WebAssembly 引擎。我们为此使用了[Wasmtime](https://github.com/bytecodealliance/wasmtime)。
 
 那么你需要你的 JS 引擎。作为这项工作的一部分，我们添加了对 Mozilla 构建系统的全面支持，用于将 SpiderMonkey 编译为 WASI。Mozilla 即将为 SpiderMonkey 添加 WASI 构建到用于构建和测试 Firefox 的相同 CI 设置。这使得 WASI 成为 SpiderMonkey 的生产质量目标，并确保 WASI 构建随着时间的推移继续工作。这意味着您可以像我们在这里一样[使用 SpiderMonkey](https://spidermonkey.dev/)。
 
@@ -264,5 +264,5 @@ JIT 使用的一种优化技术是内联缓存。使用内联缓存，JIT 创建
 
 如果您是 Python、Ruby、Lua 或其他语言的语言社区的一员，你也可以为你的语言构建一个版本。
 
-首先，您需要将运行时编译为 WebAssembly，使用 WASI 进行系统调用，就像我们对 SpiderMonkey 所做的那样。然后，为了通过快照获得快速启动时间，您可以[将 Wizer 集成到构建工具中](https://github.com/bytecodealliance/wizer#using-wizer-as-a-library)以生成内存快照，如上所述。
+首先，您需要将运行时编译为 WebAssembly，使用 WASI 进行系统调用，就像我们对 SpiderMonkey 所做的那样。然后，为了通过快照获得快速启动时间，您可以[将 Wizer 集成到构建工具中](https://github.com/bytecodealliance/wizer#using-wizer-as-a-library)以生成内存快照，您可以如上所述。
 
