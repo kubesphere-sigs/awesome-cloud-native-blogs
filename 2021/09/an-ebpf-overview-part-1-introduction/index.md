@@ -3,7 +3,7 @@ original: "https://www.collabora.com/news-and-blog/blog/2019/04/05/an-ebpf-overv
 author: "Adrian Ratiu"
 translator: "DavadDi"
 reviewer: ["yangchuansheng“]
-title: "eBPF 概述，第 1 部分：介绍"
+title: "eBPF 概述：第 1 部分：介绍"
 summary: "有兴趣了解更多关于 eBPF 技术的底层细节？那么请继续移步，我们将深入研究 eBPF 的底层细节，从其虚拟机机制和工具，到在远程资源受限的嵌入式设备上运行跟踪。"
 categories: "译文"
 tags: ["ebpf","overview"]
@@ -19,7 +19,7 @@ publishDate: 2021-09-03
 
 注意：本系列博客文章将集中在 eBPF 技术，因此对于我们来讲，文中 BPF 和 eBPF 等同，可相互使用。BPF 名字/缩写已经没有太大的意义，因为这个项目的发展远远超出了它最初的范围。BPF 和 eBPF 在该系列中会交替使用。
 
-- [第 1 部分](https://www.collabora.com/news-and-blog/blog/2019/04/05/an-ebpf-overview-part-1-introduction/)和 [第 2 部分](https://www.collabora.com/news-and-blog/blog/2019/04/15/an-ebpf-overview-part-2-machine-and-bytecode/) 为新人或那些希望通过深入了解 eBPF 技术栈的底层技术来进一步了解 eBPF 技术的人提供了深入介绍。
+- [第 1 部分](https://www.collabora.com/news-and-blog/blog/2019/04/05/an-ebpf-overview-part-1-introduction/)和[第 2 部分](https://www.collabora.com/news-and-blog/blog/2019/04/15/an-ebpf-overview-part-2-machine-and-bytecode/) 为新人或那些希望通过深入了解 eBPF 技术栈的底层技术来进一步了解 eBPF 技术的人提供了深入介绍。
 - [第 3 部分](https://www.collabora.com/news-and-blog/blog/2019/04/26/an-ebpf-overview-part-3-walking-up-the-software-stack/)是对用户空间工具的概述，旨在提高生产力，建立在第 1 部分和第 2 部分中介绍的底层虚拟机机制之上。
 - [第 4 部分](https://www.collabora.com/news-and-blog/blog/2019/05/06/an-ebpf-overview-part-4-working-with-embedded-systems/)侧重于在资源有限的嵌入式系统上运行 eBPF 程序，在嵌入式系统中完整的工具链技术栈（BCC/LLVM/python 等）是不可行的。我们将使用占用资源较小的嵌入式工具在 32 位 ARM 上交叉编译和运行 eBPF 程序。只对该部分感兴趣的读者可选择跳过其他部分。
 - [第 5 部分](https://www.collabora.com/news-and-blog/blog/2019/05/14/an-ebpf-overview-part-5-tracing-user-processes/)是关于用户空间追踪。到目前为止，我们的努力都集中在内核追踪上，所以是时候我们关注一下用户进程了。
