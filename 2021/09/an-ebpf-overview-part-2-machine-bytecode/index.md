@@ -4,7 +4,7 @@ author: Adrian Ratiu
 translator: https://github.com/1020973418
 reviewer: 
 title: An eBPF overview, part 2 ： Machine & bytecode
-summary: eBPF 概述，第二部分：机器和字节码
+summary: eBPF 概述，第 2 部分：机器和字节码
 categories: 译文
 tags: ["eBPF", "machine", "bytecode"]
 originalPublishDate: 2019-04-15
@@ -37,7 +37,7 @@ eBPF 是一个 RISC 寄存器机，共有[ 11 个 64 位寄存器](https://githu
 
 BPF 可访问的内核“辅助”函数由内核核心（不可通过模块扩展）通过类似于定义系统调用的 API 定义，使用 [BPF_CALL_*](https://github.com/torvalds/linux/blob/v4.20/include/linux/filter.h#L441) 宏。[bpf.h](https://github.com/torvalds/linux/blob/v4.20/include/uapi/linux/bpf.h#L420) 试图为所有 BPF 可访问的内核“辅助”函数提供参考。例如 [bpf_trace_printk](https://github.com/torvalds/linux/blob/v4.20/kernel/trace/bpf_trace.c#L163) 的定义使用 BPF_CALL_5 和 5 对类型/参数名称。定义[参数数据类型](https://github.com/torvalds/linux/blob/v4.20/kernel/trace/bpf_trace.c#L276)很重要，因为在每个 eBPF 程序加载时，eBPF 验证器确保寄存器数据类型与被调用方参数类型匹配。
 
-eBPF 指令也是固定大小的 64 位编码，大约 100 条指令（目前...）分为[8类](https://github.com/torvalds/linux/blob/v4.20/include/uapi/linux/bpf_common.h#L5)。VM 支持来自通用内存（ map 、堆栈、“上下文”如数据包缓冲区等）的 1-8 字节加载/存储、向前/向后（非）条件跳转、算术/逻辑运算和函数调用。如需深入了解操作码格式，请参阅 Cilium 项目[指令集文档](https://cilium.readthedocs.io/en/latest/bpf/#instruction-set)。IOVisor 项目还维护了一个有用的[指令规范](https://github.com/iovisor/bpf-docs/blob/master/eBPF.md)。
+eBPF 指令也是固定大小的 64 位编码，大约 100 条指令（目前...）分为[ 8 类](https://github.com/torvalds/linux/blob/v4.20/include/uapi/linux/bpf_common.h#L5)。VM 支持来自通用内存（ map 、堆栈、“上下文”如数据包缓冲区等）的 1-8 字节加载/存储、向前/向后（非）条件跳转、算术/逻辑运算和函数调用。如需深入了解操作码格式，请参阅 Cilium 项目[指令集文档](https://cilium.readthedocs.io/en/latest/bpf/#instruction-set)。IOVisor 项目还维护了一个有用的[指令规范](https://github.com/iovisor/bpf-docs/blob/master/eBPF.md)。
 
 在本系列第一部分研究的示例中，我们使用了一些有用的[内核宏](https://github.com/torvalds/linux/blob/v4.20/samples/bpf/bpf_insn.h)来使用以下[结构](https://github.com/torvalds/linux/blob/v4.20/include/uapi/linux/bpf.h#L64)创建 eBPF 字节码指令数组（所有指令都以这种方式编码）：
 
@@ -133,10 +133,10 @@ BPF_EXIT_INSN(),
 ```
 将 eBPF retcode 设置为 0 并退出。
 
-尽管这个 sock_example 逻辑非常简单（它只是在 map 中增加的一些数字），但在原始字节码中实现或理解是困难的。更复杂的任务在像这样的汇编程序中完成时变得极其困难。展望未来，我们将开始使用更高级的语言和工具，以更少的努力开启更强大的 eBPF 用例。
+尽管这个 sock_example 逻辑非常简单（它只是在 map 中增加的一些数字），但在原始字节码中实现或理解是困难的。更复杂的任务在像这样的汇编程序中完成时变得极其困难。展望未来，我们将开始使用更高级的语言和工具，以更少的工作开启更强大的 eBPF 用例。
 
 ## 总结
 
-在这一部分中，我们仔细观察了 eBPF 虚拟机的寄存器和指令集，了解了 eBPF 可访问的内核函数是如何从字节码中调用的，以及它们是如何被核心内核通过类似 syscall 的特殊目的 API 定义的。我们也完全理解了第 1 部分例子中使用的字节码。还有一些未探索的领域，如创建多个 eBPF 程序函数或链式 eBPF 程序以绕过 Linux 发行版的 4096 条指令限制。也许我们会在以后的文章中探讨这些。
+在这一部分中，我们仔细观察了 eBPF 虚拟机的寄存器和指令集，了解了 eBPF 可访问的内核函数是如何从字节码中调用的，以及它们是如何被核心内核通过类似 syscall 的特殊目的 API 定义的。我们也完全理解了第一部分例子中使用的字节码。还有一些未探索的领域，如创建多个 eBPF 程序函数或链式 eBPF 程序以绕过 Linux 发行版的 4096 条指令限制。也许我们会在以后的文章中探讨这些。
 
 现在，主要的问题是编写原始字节码很困难的，这非常像编写汇编代码，而且编写效率低下。在第三部分中，我们将开始研究使用高级语言编译成 eBPF 字节码，到此为止我们已经了解了虚拟机工作的底层基础知识。
