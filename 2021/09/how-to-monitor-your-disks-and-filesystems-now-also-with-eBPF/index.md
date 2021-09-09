@@ -3,8 +3,8 @@ original: https://www.netdata.cloud/blog/how-to-monitor-your-disks-and-filesyste
 author: Manos Saratsis
 translator: https://github.com/lxy96Scorpion
 reviewer: 
-title: How to monitor your disks and filesystems, now also with eBPF
-summary: 现在使用 eBPF 如何监视您的磁盘和文件系统？
+title: 现在使用 eBPF 如何监视您的磁盘和文件系统？
+summary: 如何通过 eBPF 监视磁盘和文件系统
 categories: 译文
 tags: ["eBPF", "monitor", "disk", "filesystem"]
 originalPublishDate: 2021-08-16
@@ -26,9 +26,9 @@ publishDate: 2021-09-08
 + 基于新的 eBPF 图表，使用一组新的用例补充警报，
 + 了解有关 Linux 内核及其隐藏但有实际用途的更多秘密信息。
 
-作为基础，我们使用的代码最初是由[ IOvisor ](https://www.iovisor.org/)与 [BCC](https://github.com/iovisor/bcc) 工具， [Cloudflare](https://www.cloudflare.com/) 与[ eBPF exporter ](https://github.com/cloudflare/ebpf_exporter)开发的；我们非常感谢他们的贡献，并打算扩大他们的工作范围，将这些工具的价值分享给你们所有人。
+作为基础，我们使用的代码最初是由[ IOvisor ](https://www.iovisor.org/)中的[ BCC ](https://github.com/iovisor/bcc)工具，[ Cloudflare ](https://www.cloudflare.com/)中的[ eBPF exporter ](https://github.com/cloudflare/ebpf_exporter)开发的；我们非常感谢他们的贡献，并打算扩大他们的工作范围，将这些工具的价值分享给你们所有人。
 
-Netdata 将是所有 eBPF 工具的超集。此外，通过消除配置上的开销，我们简化了可视化信息之前的整个过程。Netdata，你可以使用一个命令安装我们的监控代理，把它连接到一个在[ Cloud ](https://app.netdata.cloud/?utm_source=website&utm_content=get_netdata_button1)上的[ Space ](https://learn.netdata.cloud/docs/cloud/spaces)，开箱即用的 eBPF 监控，避免了寻找 eBPF工具，需要编译，运行，收集的复杂性和存储输出以及开发用于故障排除的可视化所需的配置。我们为您处理这些所有的复杂性。只需[在您的代理上启用 eBPF ](https://learn.netdata.cloud/docs/agent/collectors/ebpf.plugin)，您就可以开始使用了！
+Netdata 是所有 eBPF 工具的超集。此外，通过消除配置上的开销，我们简化了可视化信息之前的整个过程。Netdata，你可以使用一个命令安装我们的监控代理，把它连接到一个在[ Cloud ](https://app.netdata.cloud/?utm_source=website&utm_content=get_netdata_button1)上的[ Space ](https://learn.netdata.cloud/docs/cloud/spaces)，开箱即用的 eBPF 监控，避免了寻找 eBPF工具，需要编译，运行，收集的复杂性和存储输出以及开发用于故障排除的可视化所需的配置。我们为您处理这些所有的复杂性。只需[在您的代理上启用 eBPF ](https://learn.netdata.cloud/docs/agent/collectors/ebpf.plugin)，您就可以开始使用了！
 
 ## 磁盘监控和预警
 
@@ -56,7 +56,7 @@ Netdata 通过在现有的仪表盘上提供的许多开箱即用的图表来监
 + <strong>磁盘延迟 ( eBPF )：</strong>延迟图表显示直方图以及读取和写入数据所需的时间。
 + <strong>同步 ( eBPF )：</strong>当数据从内存页面缓存移动到硬盘时。
 + <strong>页面缓存 ( eBPF )：</strong>数据如何在主机上实时更改。
-+ <strong>挂载点监控 ( eBPF )：</strong>当分区/磁盘被移除并插入到您的主机上时
++ <strong>挂载点监控 ( eBPF )：</strong>当分区/磁盘被移除并插入到您的主机上时。
 
 我们为以下项目提供预建预警：
 + 磁盘利用率
@@ -68,9 +68,9 @@ Netdata 通过在现有的仪表盘上提供的许多开箱即用的图表来监
 
 <strong>磁盘空间使用</strong>
 
-磁盘空间利用率。reserved for root 是系统自动预留的，防止root用户空间不足。
+磁盘空间利用率。reserved for root 是系统自动预留的，防止 root 用户空间不足。
 
-<strong>磁盘文件（ inode ）使用</strong>——耗尽可用的inode（或索引节点）会导致无法创建新文件的问题。
+<strong>磁盘文件（ inode ）使用</strong>——耗尽可用的 inode（或索引节点）会导致无法创建新文件的问题。
 inodes（或索引节点）是文件系统对象（例如文件和目录）。在许多类型的文件系统实现中，inode 的最大数量在文件系统创建时是固定的，限制了文件系统可以容纳的最大文件数量。设备可能会耗尽 inode。发生这种情况时，即使可能有可用空间，也无法在设备上创建新文件。
 
 <strong>挂载系统调用 ( eBPF )</strong>
@@ -125,7 +125,7 @@ Netdata 监控不同的文件系统，例如：
 
 延迟是完成事件所需的时间。Netdata 计算函数调用与其返回之间的差异。最终结果按时间间隔存储。
 
-每个硬盘都有自己的执行读写操作的延迟，要正确设置您的预警，我们建议您查看您的硬盘手册。
+每个硬盘都有自己的执行读写操作的延迟，要正确设置预警，我们建议您查看硬盘手册。
 
 ![](Screen-Shot-2021-08-13-at-11.57.31-AM-1.png)
 
