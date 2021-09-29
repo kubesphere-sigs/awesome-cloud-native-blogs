@@ -83,7 +83,7 @@ llc -march=bpf -mcpu=probe -filetype=obj -o xconnect.o
 ```yaml
 spec, err := ebpf.LoadCollectionSpec("ebpf/xconnect.o")
 if err != nil {
-  panic(err)
+    panic(err)
 }
 
 var objs struct {
