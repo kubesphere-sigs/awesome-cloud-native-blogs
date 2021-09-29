@@ -10,7 +10,7 @@ summary: 使用GO开始入门eBPF
 categories: kubernetes
 tags: eBPF/go
 originalPublishDate: 2021-09-06
-publishDate: 
+publishDate: 2021-09-29
 ---
 
 ```
@@ -87,8 +87,8 @@ if err != nil {
 }
 
 var objs struct {
-	XCProg  *ebpf.Program `ebpf:"xdp_xconnect"`
-	XCMap   *ebpf.Map     `ebpf:"xconnect_map"`
+    XCProg  *ebpf.Program `ebpf:"xdp_xconnect"`
+    XCMap   *ebpf.Map     `ebpf:"xconnect_map"`
 }
 if err := spec.LoadAndAssign(&objs, nil); err != nil {
 	panic(err)
