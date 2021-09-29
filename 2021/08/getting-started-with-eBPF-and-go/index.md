@@ -91,7 +91,7 @@ var objs struct {
     XCMap   *ebpf.Map     `ebpf:"xconnect_map"`
 }
 if err := spec.LoadAndAssign(&objs, nil); err != nil {
-	panic(err)
+    panic(err)
 }
 defer objs.XCProg.Close()
 defer objs.XCMap.Close()
