@@ -20,7 +20,7 @@ WebAssembly 是部署单元的下一个演变。我们已经从自定义镜像�
 
 我们认为你应该关注 WebAssembly，因为我们认为它完全有可能成为我们所知的计算的未来。
 
-那么究竟什么是 WebAssembly 吗？
+那么究竟 WebAssembly 是什么呢？
 
 ## WebAssembly 既不是 Web 也不是 Assembly
 
